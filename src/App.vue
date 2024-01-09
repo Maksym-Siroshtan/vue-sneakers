@@ -1,7 +1,9 @@
 <script setup>
-
+  import Header from './components/Header.vue'
 </script>
 
 <template>
- <h1 class="text-3xl font-bold underline">Vue-sneakers!</h1>
+  <div class="w-4/5 h-screen bg-white m-auto my-14 rounded-xl shadow-xl">
+    <Header />
+  </div>
 </template>
