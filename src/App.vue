@@ -1,10 +1,12 @@
 <script setup>
 import Header from './components/Header.vue'
 import CardList from './components/CardList.vue'
+// import Drawer from './components/Drawer.vue'
 </script>
 
 <template>
-  <div class="w-4/5 bg-white m-auto my-14 rounded-xl shadow-xl">
+  <!-- <Drawer /> -->
+  <div class="w-4/5 bg-white m-auto py-14 rounded-xl shadow-xl">
     <Header />
 
     <div class="p-10">
