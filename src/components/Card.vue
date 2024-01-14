@@ -12,24 +12,29 @@ defineProps({
 
 <template>
   <li
-    class="relative bg-white border border-slate-100 rounded-3xl p-9 cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all"
+    class="flex flex-col relative bg-white border border-slate-100 rounded-3xl p-8 cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all"
   >
     <img
       :src="isFavorite ? '/like-2.svg' : '/like-1.svg'"
       @click="onClickFavorite"
       alt="Favorite"
-      class="absolute top-10 left-8"
+      class="absolute top-10 left-8 w-10"
     />
-    <img :src="imageUrl" alt="Sneakers-1" class="mb-2 rounded-3xl w-44 h-30" />
+    <img :src="imageUrl" alt="Sneakers-1" class="mb-2 rounded-3xl w-44 h-40" />
 
-    <p class="text-base font-bold mb-3">{{ title }}</p>
+    <p class="flex-1 text-xl font-medium mb-4">{{ title }}</p>
 
     <div class="flex justify-between items-center">
       <div class="flex flex-col">
-        <span class="text-xs text-slate-400 uppercase">Цена:</span>
-        <b>{{ price }} руб.</b>
+        <span class="text-lg text-slate-400 uppercase">Цена:</span>
+        <b class="text-xl">{{ price }} руб.</b>
       </div>
-      <img :src="isAdded ? '/checked.svg' : '/plus.svg'" @click="onClickAdd" alt="Add sneakers" />
+      <img
+        :src="isAdded ? '/checked.svg' : '/plus.svg'"
+        @click="onClickAdd"
+        alt="Add sneakers"
+        class="w-10"
+      />
     </div>
   </li>
 </template>
