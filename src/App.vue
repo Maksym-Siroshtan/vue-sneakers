@@ -9,7 +9,7 @@ import CardList from './components/CardList.vue'
 const items = ref([])
 
 const filters = reactive({
-  sortBy: 'name',
+  sortBy: 'title',
   searchQuery: ''
 })
 
@@ -19,6 +19,27 @@ const onChangeSelect = (event) => {
 
 const onChangeSearchInput = (event) => {
   filters.searchQuery = event.target.value
+}
+
+const fetchFavorites = async () => {
+  try {
+    const { data: favorites } = await axios.get('https://8ca1b7098d059351.mokky.dev/favorites')
+    items.value = items.value.map((item) => {
+      const favorite = favorites.find((favorite) => favorite.parentId === item.id)
+
+      if (!favorite) {
+        return item
+      }
+
+      return {
+        ...item,
+        isFavorite: true,
+        favoriteId: favorite.id
+      }
+    })
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 const fetchItems = async () => {
@@ -34,14 +55,25 @@ const fetchItems = async () => {
     const { data } = await axios.get('https://8ca1b7098d059351.mokky.dev/items', {
       params
     })
-    items.value = data
+    items.value = data.map((item) => ({
+      ...item,
+      isFavorite: false,
+      isAdded: false
+    }))
   } catch (err) {
     console.log(err)
   }
 }
 
-onMounted(fetchItems)
-watch(filters, fetchItems)
+onMounted(async () => {
+  await fetchItems()
+  await fetchFavorites()
+})
+
+watch(filters, async () => {
+  await fetchItems()
+  await fetchFavorites()
+})
 </script>
 
 <template>
@@ -58,7 +90,7 @@ watch(filters, fetchItems)
             :value="filters.sortBy"
             class="border rounded-md outline-none pl-4 pr-3"
           >
-            <option value="name">По названию</option>
+            <option value="title">По названию</option>
             <option value="price">По цене (по возрастанию)</option>
             <option value="-price">По цене (по убыванию)</option>
           </select>

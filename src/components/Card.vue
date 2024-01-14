@@ -20,9 +20,9 @@ defineProps({
       alt="Favorite"
       class="absolute top-10 left-8 w-10"
     />
-    <img :src="imageUrl" alt="Sneakers-1" class="mb-2 rounded-3xl w-44 h-40" />
+    <img :src="imageUrl" alt="Sneakers-1" class="flex-1 mb-2 rounded-3xl" />
 
-    <p class="flex-1 text-xl font-medium mb-4">{{ title }}</p>
+    <p class="text-xl font-medium mb-4">{{ title }}</p>
 
     <div class="flex justify-between items-center">
       <div class="flex flex-col">
