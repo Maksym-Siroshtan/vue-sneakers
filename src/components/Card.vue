@@ -20,7 +20,7 @@ defineProps({
       alt="Favorite"
       class="absolute top-10 left-8 w-10"
     />
-    <img :src="imageUrl" alt="Sneakers-1" class="flex-1 mb-2 rounded-3xl" />
+    <img :src="imageUrl" alt="Sneakers-1" class="mb-2 rounded-3xl" />
 
     <p class="text-xl font-medium mb-4">{{ title }}</p>
 
