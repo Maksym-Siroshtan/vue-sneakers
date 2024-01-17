@@ -1,15 +1,20 @@
+<script setup>
+import { inject } from 'vue'
+const { totalPrice, vatPrice } = inject('cart')
+</script>
+
 <template>
   <div>
     <div class="flex items-end mb-2">
       <span>Итого:</span>
       <div class="border-b border-dashed flex-1"></div>
-      <b>21498 руб.</b>
+      <b>{{ totalPrice }} руб.</b>
     </div>
 
     <div class="flex items-end mb-7">
       <span>Налог 5%:</span>
       <div class="border-b border-dashed flex-1"></div>
-      <b>1074 руб.</b>
+      <b>{{ vatPrice }} руб.</b>
     </div>
 
     <button

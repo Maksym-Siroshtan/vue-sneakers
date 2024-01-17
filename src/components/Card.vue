@@ -5,7 +5,7 @@ defineProps({
   price: Number,
   isFavorite: Boolean,
   isAdded: Boolean,
-  onClickAdd: Function,
+  onClickOnPlus: Function,
   onClickFavorite: Function
 })
 </script>
@@ -31,7 +31,7 @@ defineProps({
       </div>
       <img
         :src="isAdded ? '/checked.svg' : '/plus.svg'"
-        @click="onClickAdd"
+        @click="onClickOnPlus"
         alt="Add sneakers"
         class="w-10"
       />
