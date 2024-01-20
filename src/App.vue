@@ -9,9 +9,12 @@ import Drawer from './components/Drawer.vue'
 const items = ref([])
 const cartItems = ref([])
 const isDrawerOpen = ref(false)
+const isOrderCreating = ref(false)
+const isCartEmpty = computed(() => cartItems.value.length === 0)
 
 const totalPrice = computed(() => cartItems.value.reduce((acc, item) => (acc += item.price), 0))
 const vatPrice = computed(() => Math.round((totalPrice.value * 5) / 100))
+const isCartButtonDisabled = computed(() => isOrderCreating.value || isCartEmpty.value)
 
 const filters = reactive({
   sortBy: 'title',
@@ -24,6 +27,24 @@ const openDrawer = () => {
 
 const closeDrawer = () => {
   isDrawerOpen.value = false
+}
+
+const addToOrders = async () => {
+  try {
+    isOrderCreating.value = true
+    const { data } = await axios.post('https://8ca1b7098d059351.mokky.dev/orders', {
+      items: cartItems.value,
+      totalPrice: totalPrice.value
+    })
+
+    cartItems.value = []
+
+    return data
+  } catch (err) {
+    console.log(err)
+  } finally {
+    isOrderCreating.value = false
+  }
 }
 
 const onChangeSelect = (event) => {
@@ -117,8 +138,16 @@ const fetchItems = async () => {
 }
 
 onMounted(async () => {
+  const data = localStorage.getItem('cartItems')
+  cartItems.value = data ? JSON.parse(data) : []
+
   await fetchItems()
   await fetchFavorites()
+
+  items.value = items.value.map((item) => ({
+    ...item,
+    isAdded: cartItems.value.some((cartItem) => cartItem.id === item.id)
+  }))
 })
 
 watch(filters, fetchItems)
@@ -131,6 +160,23 @@ watch(isDrawerOpen, () => {
   }
 })
 
+watch(cartItems, () => {
+  items.value = items.value.map((item) => ({
+    ...item,
+    isAdded: false
+  }))
+})
+
+watch(
+  cartItems,
+  () => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems.value))
+  },
+  {
+    deep: true
+  }
+)
+
 provide('cart', {
   cartItems,
   openDrawer,
@@ -138,12 +184,14 @@ provide('cart', {
   addToCart,
   removeFromCart,
   totalPrice,
-  vatPrice
+  vatPrice,
+  addToOrders,
+  isCartButtonDisabled
 })
 </script>
 
 <template>
-  <Drawer v-if="isDrawerOpen" />
+  <Drawer v-if="isDrawerOpen" :total-price="totalPrice" />
   <div class="w-4/5 bg-white m-auto mt-20 rounded-xl shadow-xl">
     <Header :total-price="totalPrice" @open-drawer="openDrawer" />
 
