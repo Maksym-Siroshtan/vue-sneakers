@@ -10,7 +10,7 @@ const emit = defineEmits(['addToFavorite', 'onClickOnPlus'])
 </script>
 
 <template>
-  <ul class="grid grid-cols-4 gap-4">
+  <ul v-auto-animate class="grid grid-cols-4 gap-4">
     <Card
       v-for="item in items"
       :key="item.id"
