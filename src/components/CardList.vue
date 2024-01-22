@@ -2,11 +2,11 @@
 import Card from './Card.vue'
 
 defineProps({
-  items: Array
+  items: Array,
+  isButtonNotShowed: Boolean
 })
 
 const emit = defineEmits(['addToFavorite', 'onClickOnPlus'])
-
 </script>
 
 <template>
@@ -19,8 +19,8 @@ const emit = defineEmits(['addToFavorite', 'onClickOnPlus'])
       :image-url="item.imageUrl"
       :is-favorite="item.isFavorite"
       :is-added="item.isAdded"
-      :on-click-favorite="() => emit('addToFavorite', item)"
-      :on-click-on-plus="() => emit('onClickOnPlus', item)"
+      :on-click-favorite="isButtonNotShowed ? null : () => emit('addToFavorite', item)"
+      :on-click-on-plus="isButtonNotShowed ? null : () => emit('onClickOnPlus', item)"
     />
   </ul>
 </template>

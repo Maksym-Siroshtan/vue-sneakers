@@ -12,7 +12,7 @@ const app = createApp(App)
 
 const routes = [
   { path: '/', component: Home },
-  { path: '/Favorites', component: Favorites }
+  { path: '/favorites', component: Favorites }
 ]
 
 const router = createRouter({
