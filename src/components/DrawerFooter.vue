@@ -1,6 +1,13 @@
 <script setup>
 import { inject } from 'vue'
-const { totalPrice, vatPrice, addToOrders, isCartButtonDisabled } = inject('cart')
+
+defineProps({
+  buttonDisabled: Boolean
+})
+
+const emit = defineEmits(['addToOrders'])
+
+const { totalPrice, vatPrice } = inject('cart')
 </script>
 
 <template>
@@ -18,8 +25,8 @@ const { totalPrice, vatPrice, addToOrders, isCartButtonDisabled } = inject('cart
     </div>
 
     <button
-      :disabled="isCartButtonDisabled"
-      @click="addToOrders"
+      :disabled="buttonDisabled"
+      @click="emit('addToOrders')"
       class="flex justify-center gap-12 items-center w-full bg-lime-500 py-3 rounded-3xl text-white hover:bg-lime-600 active:bg-lime-700 disabled:bg-gray-300 transition pl-14"
     >
       Оформить заказ
